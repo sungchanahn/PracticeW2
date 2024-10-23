@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class QuestManager : MonoBehaviour
@@ -16,12 +14,12 @@ public class QuestManager : MonoBehaviour
             if (instance == null)
             {
                 instance = FindObjectOfType<QuestManager>();
-            }
 
-            if (instance == null)
-            {
-                GameObject questManager = new GameObject("QuestManager");
-                instance = questManager.AddComponent<QuestManager>();
+                if (instance == null)
+                {
+                    GameObject questManager = new GameObject("QuestManager");
+                    instance = questManager.AddComponent<QuestManager>();
+                }
             }
             return instance;
         }
@@ -37,6 +35,7 @@ public class QuestManager : MonoBehaviour
         else
         {
             instance = this;
+            DontDestroyOnLoad(gameObject);
         }
     }
 }
