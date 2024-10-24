@@ -4,5 +4,4 @@
 public class EncounterQuestDataSO : QuestDataSO
 {
     public string EncounterNPCName;
-    public int EncounterNPCId;
 }

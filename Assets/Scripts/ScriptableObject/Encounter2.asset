@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: Encounter2
   m_EditorClassIdentifier: 
   QuestID: 2
-  QuestName: "\uC720\uB2C8\uD2F0 \uC785\uBB38\uD558\uAE30"
+  QuestType: 1
+  QuestName: Start Unity basic
   QuestRequiredLevel: 11
   QuestNPC: 1
   QuestPrerequisites: 
-  EncounterNPCName: "\uD29C\uD130\uB2D8"
+  EncounterNPCName: Tutor Song
   EncounterNPCId: 3

@@ -5,8 +5,6 @@ public class QuestManager : MonoBehaviour
 {
     private static QuestManager instance;
 
-    [SerializeField] private Dictionary<int, QuestDataSO> questDictionary;
-
     public static QuestManager Instance
     {
         get
@@ -25,6 +23,17 @@ public class QuestManager : MonoBehaviour
         }
     }
 
+    private Player _player;
+
+    public Player Player
+    {
+        get { return _player; }
+        set { _player = value; }
+    }
+
+    public QuestSlot[] slots;
+    public Transform questList;
+
     private void Awake()
     {
         if (instance != null && instance != this)
@@ -36,6 +45,56 @@ public class QuestManager : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
+        }
+    }
+
+    private void Start()
+    {
+        slots = new QuestSlot[questList.childCount];
+
+        for (int i = 0; i < slots.Length; i++)
+        {
+            slots[i] = questList.GetChild(i).GetComponent<QuestSlot>();
+            slots[i].index = i;
+        }
+    }
+
+    public void AddQuest()
+    {
+        QuestDataSO questData = Player.questData;
+
+        QuestSlot emptySlot = GetEmptySlot();
+
+        if (emptySlot != null)
+        {
+            emptySlot.questData = questData;
+        }
+    }
+
+    private QuestSlot GetEmptySlot()
+    {
+        for (int i = 0; i < slots.Length; i++)
+        {
+            if (slots[i].questData == null)
+            {
+                return slots[i];
+            }
+        }
+        return null;
+    }
+
+    private void UpdateUI()
+    {
+        for (int i = 0; i < slots.Length; i++)
+        {
+            if (slots[i].questData != null)
+            {
+                slots[i].Set();
+            }
+            else
+            {
+                slots[i].Clear();
+            }
         }
     }
 }
