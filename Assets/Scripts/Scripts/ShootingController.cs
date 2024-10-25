@@ -14,7 +14,7 @@ public class ShootingController : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(0.5f);
             GameObject projectile = GameManager.Instance.pool.Get("Bullet");
             projectile.transform.position = weaponPivot.position;
         }

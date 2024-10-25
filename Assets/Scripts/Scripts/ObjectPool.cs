@@ -12,21 +12,21 @@ public class ObjectPool : MonoBehaviour
     }
 
     public List<Pool> Pools;
-    public Dictionary<string, Queue<GameObject>> PoolDictionary;
+    public Dictionary<string, List<GameObject>> PoolDictionary;
 
 
     void Start()
     {
         // 미리 poolSize만큼 게임오브젝트를 생성한다.
-        PoolDictionary = new Dictionary<string, Queue<GameObject>>();
+        PoolDictionary = new Dictionary<string, List<GameObject>>();
         foreach (var pool in Pools)
         {
-            Queue<GameObject> objectpool = new Queue<GameObject>();
+            List<GameObject> objectpool = new List<GameObject>();
             for (int i = 0; i < pool.poolSize; i++)
             {
                 GameObject obj = Instantiate(pool.prefab, transform);
                 obj.SetActive(false);
-                objectpool.Enqueue(obj);
+                objectpool.Add(obj);
             }
 
             PoolDictionary.Add(pool.tag, objectpool);
@@ -40,19 +40,23 @@ public class ObjectPool : MonoBehaviour
         {
             return null;
         }
-        
-        if (PoolDictionary[_tag].TryDequeue(out GameObject obj))
+
+        List<GameObject> objectPool = PoolDictionary[_tag];
+        foreach (GameObject obj in objectPool)
         {
-            obj.SetActive(true);
-            return obj;
+            if (!obj.activeInHierarchy)
+            {
+                obj.SetActive(true);
+                return obj;
+            }
         }
-        else return null;
+
+        return null;
     }
 
     public void Release(string tag, GameObject obj)
     {
         // 게임오브젝트를 deactive한다.
         obj.SetActive(false);
-        PoolDictionary[tag].Enqueue(obj);
     }
 }
