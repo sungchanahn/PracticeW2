@@ -46,6 +46,7 @@ public class QuestManager : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(gameObject);
         }
+        questList = GameObject.FindGameObjectWithTag("QuestList").transform;
     }
 
     private void Start()
@@ -68,6 +69,7 @@ public class QuestManager : MonoBehaviour
         if (emptySlot != null)
         {
             emptySlot.questData = questData;
+            UpdateUI();
         }
     }
 

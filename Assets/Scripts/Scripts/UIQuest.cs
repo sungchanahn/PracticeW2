@@ -4,6 +4,11 @@ public class UIQuest : MonoBehaviour
 {
     public GameObject questWindow;
 
+    private void Start()
+    {
+        questWindow.SetActive(false);
+    }
+
     public void Toggle()
     {
         if (IsOpen())
